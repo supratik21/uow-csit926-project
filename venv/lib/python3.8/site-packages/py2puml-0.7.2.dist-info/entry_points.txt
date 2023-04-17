@@ -1,0 +1,3 @@
+[console_scripts]
+py2puml=py2puml.cli:run
+

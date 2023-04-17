@@ -7,6 +7,9 @@ from textwrap import dedent
 
 from pytest import mark
 
+import _ast as module_0
+import py2puml.parsing.astvisitors as module_1
+
 from py2puml.parsing.astvisitors import AssignedVariablesCollector, SignatureVariablesCollector, Variable, shorten_compound_type_annotation
 from py2puml.parsing.moduleresolver import ModuleResolver
 
@@ -188,3 +191,263 @@ def test_shorten_compound_type_annotation(full_annotation: str, short_annotation
     shortened_annotation, full_namespaced_definitions = shorten_compound_type_annotation(full_annotation, module_resolver)
     assert shortened_annotation == short_annotation
     assert full_namespaced_definitions == namespaced_definitions
+
+#new
+def test_case_0():
+    assign_0 = module_0.Assign()
+    list_0 = [assign_0, assign_0]
+    arg_0 = module_0.arg(*list_0)
+    str_0 = "*H$`XC(3 o'wo"
+    signature_variables_collector_0 = module_1.SignatureVariablesCollector(
+        str_0)
+    assert assign_0 is not None
+    assert signature_variables_collector_0.constructor_source == "*H$`XC(3 o'wo"
+    assert signature_variables_collector_0.class_self_id is None
+    assert signature_variables_collector_0.variables == []
+    assert module_0.PyCF_ALLOW_TOP_LEVEL_AWAIT == 8192
+    assert module_0.PyCF_ONLY_AST == 1024
+    assert module_0.PyCF_TYPE_COMMENTS == 4096
+    assert module_1.SPLITTING_CHARACTERS == ('[', ']', ',')
+    var_0 = signature_variables_collector_0.visit_arg(arg_0)
+    assert var_0 is None
+    var_1 = signature_variables_collector_0.visit_arg(arg_0)
+    assert len(signature_variables_collector_0.variables) == 1
+    assert var_1 is None
+    attribute_0 = module_0.Attribute()
+    assert attribute_0 is not None
+
+
+def test_case_1():
+    assign_0 = module_0.Assign()
+    list_0 = [assign_0, assign_0]
+    dict_0 = {}
+    str_0 = "*H$`XC(3 o'wo"
+    attribute_0 = module_0.Attribute(*list_0, **dict_0)
+    expr_0 = module_0.expr(**dict_0)
+    assigned_variables_collector_0 = module_1.AssignedVariablesCollector(str_0,
+        expr_0)
+    assert assign_0 is not None
+    assert expr_0 is not None
+    assert assigned_variables_collector_0.class_self_id == "*H$`XC(3 o'wo"
+    assert assigned_variables_collector_0.variables == []
+    assert assigned_variables_collector_0.self_attributes == []
+    assert module_0.PyCF_ALLOW_TOP_LEVEL_AWAIT == 8192
+    assert module_0.PyCF_ONLY_AST == 1024
+    assert module_0.PyCF_TYPE_COMMENTS == 4096
+    assert module_1.SPLITTING_CHARACTERS == ('[', ']', ',')
+    var_0 = assigned_variables_collector_0.visit_Attribute(attribute_0)
+    assert var_0 is None
+
+
+def test_case_2():
+    str_0 = 'e'
+    list_0 = [str_0]
+    name_0 = module_0.Name(*list_0)
+    expr_0 = module_0.expr()
+    assigned_variables_collector_0 = module_1.AssignedVariablesCollector(str_0,
+        expr_0)
+    assert name_0.id == 'e'
+    assert expr_0 is not None
+    assert assigned_variables_collector_0.class_self_id == 'e'
+    assert assigned_variables_collector_0.variables == []
+    assert assigned_variables_collector_0.self_attributes == []
+    assert module_0.PyCF_ALLOW_TOP_LEVEL_AWAIT == 8192
+    assert module_0.PyCF_ONLY_AST == 1024
+    assert module_0.PyCF_TYPE_COMMENTS == 4096
+    assert module_1.SPLITTING_CHARACTERS == ('[', ']', ',')
+    var_0 = assigned_variables_collector_0.visit_Name(name_0)
+    assert var_0 is None
+    signature_variables_collector_0 = module_1.SignatureVariablesCollector(
+        str_0)
+    assert signature_variables_collector_0.constructor_source == 'e'
+    assert signature_variables_collector_0.class_self_id is None
+    assert signature_variables_collector_0.variables == []
+
+
+def test_case_3():
+    list_0 = []
+    subscript_0 = module_0.Subscript(*list_0)
+    str_0 = 'ou.~K&pztteMP0'
+    str_1 = 'jck\x0b0uG}BJ%\tC{6|@'
+    dict_0 = {str_1: str_0}
+    expr_0 = module_0.expr(**dict_0)
+    assigned_variables_collector_0 = module_1.AssignedVariablesCollector(str_0,
+        expr_0)
+    assert subscript_0 is not None
+    #assert expr_0.jck
+    #                 0uG}BJ%	C{6|@ == 'ou.~K&pztteMP0'
+    assert assigned_variables_collector_0.class_self_id == 'ou.~K&pztteMP0'
+    assert assigned_variables_collector_0.variables == []
+    assert assigned_variables_collector_0.self_attributes == []
+    assert module_0.PyCF_ALLOW_TOP_LEVEL_AWAIT == 8192
+    assert module_0.PyCF_ONLY_AST == 1024
+    assert module_0.PyCF_TYPE_COMMENTS == 4096
+    assert module_1.SPLITTING_CHARACTERS == ('[', ']', ',')
+    var_0 = assigned_variables_collector_0.visit_Subscript(subscript_0)
+    assert var_0 is None
+
+
+def test_case_4():
+    assign_0 = module_0.Assign()
+    list_0 = [assign_0]
+    name_0 = module_0.Name(*list_0)
+    str_0 = 'cQ%;FRLx'
+    expr_0 = module_0.expr()
+    assigned_variables_collector_0 = module_1.AssignedVariablesCollector(str_0,
+        expr_0)
+    assert assign_0 is not None
+    assert expr_0 is not None
+    assert assigned_variables_collector_0.class_self_id == 'cQ%;FRLx'
+    assert assigned_variables_collector_0.variables == []
+    assert assigned_variables_collector_0.self_attributes == []
+    assert module_0.PyCF_ALLOW_TOP_LEVEL_AWAIT == 8192
+    assert module_0.PyCF_ONLY_AST == 1024
+    assert module_0.PyCF_TYPE_COMMENTS == 4096
+    assert module_1.SPLITTING_CHARACTERS == ('[', ']', ',')
+    var_0 = assigned_variables_collector_0.visit_Name(name_0)
+    assert len(assigned_variables_collector_0.variables) == 1
+    assert var_0 is None
+    arg_0 = module_0.arg(*list_0)
+    str_1 = "*H$`XC(3 o'wo"
+    assigned_variables_collector_1 = module_1.AssignedVariablesCollector(str_1,
+        expr_0)
+    assert assigned_variables_collector_1.class_self_id == "*H$`XC(3 o'wo"
+    assert assigned_variables_collector_1.variables == []
+    assert assigned_variables_collector_1.self_attributes == []
+
+
+def test_case_5():
+    assign_0 = module_0.Assign()
+    list_0 = [assign_0]
+    name_0 = module_0.Name(*list_0)
+    str_0 = "-?zI+4oz6f'r>q!\x0b214G"
+    expr_0 = module_0.expr()
+    assigned_variables_collector_0 = module_1.AssignedVariablesCollector(str_0,
+        expr_0)
+    assert assign_0 is not None
+    assert expr_0 is not None
+    assert assigned_variables_collector_0.class_self_id == "-?zI+4oz6f'r>q!\x0b214G"
+    assert assigned_variables_collector_0.variables == []
+    assert assigned_variables_collector_0.self_attributes == []
+    assert module_0.PyCF_ALLOW_TOP_LEVEL_AWAIT == 8192
+    assert module_0.PyCF_ONLY_AST == 1024
+    assert module_0.PyCF_TYPE_COMMENTS == 4096
+    assert module_1.SPLITTING_CHARACTERS == ('[', ']', ',')
+    list_1 = [name_0]
+    attribute_0 = module_0.Attribute(*list_1)
+    var_0 = assigned_variables_collector_0.visit_Attribute(attribute_0)
+    assert var_0 is None
+
+#Failing
+def test_case_f0():
+    try:
+        variable_0 = module_0.Variable()
+    except BaseException:
+        pass
+
+
+def test_case_f1():
+    try:
+        str_0 = '%|8\r,f\n'
+        list_0 = [str_0, str_0, str_0]
+        signature_variables_collector_0 = module_0.SignatureVariablesCollector(
+            str_0, *list_0)
+    except BaseException:
+        pass
+
+
+def test_case_f2():
+    try:
+        dict_0 = {}
+        str_0 = "*H$`XC(3 o'wo"
+        signature_variables_collector_0 = module_0.SignatureVariablesCollector(
+            str_0)
+        assert signature_variables_collector_0.constructor_source == "*H$`XC(3 o'wo"
+        assert signature_variables_collector_0.class_self_id is None
+        assert signature_variables_collector_0.variables == []
+        assert module_0.SPLITTING_CHARACTERS == ('[', ']', ',')
+        expr_0 = module_1.expr(**dict_0)
+        assert expr_0 is not None
+        assert module_1.PyCF_ALLOW_TOP_LEVEL_AWAIT == 8192
+        assert module_1.PyCF_ONLY_AST == 1024
+        assert module_1.PyCF_TYPE_COMMENTS == 4096
+        str_1 = '6e_\x0bE\t<J9Bxy)~*'
+        module_resolver_0 = None
+        str_2 = '~\tH+j!=gl>D\x0b%'
+        constructor_visitor_0 = module_0.ConstructorVisitor(str_2, str_1,
+            str_1, module_resolver_0)
+    except BaseException:
+        pass
+
+
+def test_case_f3():
+    try:
+        assign_0 = module_1.Assign()
+        subscript_0 = module_1.Subscript()
+        str_0 = 't$?QR9 \r~WEuFJ+{+\n`'
+        expr_0 = module_1.expr()
+        assigned_variables_collector_0 = module_0.AssignedVariablesCollector(
+            str_0, expr_0)
+        assert assign_0 is not None
+        assert subscript_0 is not None
+        assert expr_0 is not None
+        assert assigned_variables_collector_0.class_self_id == 't$?QR9 \r~WEuFJ+{+\n`'
+        assert assigned_variables_collector_0.variables == []
+        assert assigned_variables_collector_0.self_attributes == []
+        assert module_1.PyCF_ALLOW_TOP_LEVEL_AWAIT == 8192
+        assert module_1.PyCF_ONLY_AST == 1024
+        assert module_1.PyCF_TYPE_COMMENTS == 4096
+        assert module_0.SPLITTING_CHARACTERS == ('[', ']', ',')
+        var_0 = assigned_variables_collector_0.visit_Subscript(subscript_0)
+        assert var_0 is None
+        var_1 = assigned_variables_collector_0.visit_Subscript(subscript_0)
+        assert var_1 is None
+        list_0 = [str_0]
+        name_0 = module_1.Name(*list_0)
+        assert name_0.id == 't$?QR9 \r~WEuFJ+{+\n`'
+        subscript_1 = module_1.Subscript()
+        assert subscript_1 is not None
+        str_1 = '..,ch$P$'
+        expr_1 = module_1.expr()
+        assert expr_1 is not None
+        assigned_variables_collector_1 = module_0.AssignedVariablesCollector(
+            str_1, expr_1)
+        assert assigned_variables_collector_1.class_self_id == '..,ch$P$'
+        assert assigned_variables_collector_1.variables == []
+        assert assigned_variables_collector_1.self_attributes == []
+        var_2 = assigned_variables_collector_1.visit_Subscript(subscript_1)
+        assert var_2 is None
+        var_3 = assigned_variables_collector_1.visit_Subscript(subscript_1)
+        assert var_3 is None
+        expr_2 = module_1.expr()
+        assert expr_2 is not None
+        assigned_variables_collector_2 = module_0.AssignedVariablesCollector(
+            str_0, expr_2)
+        assert assigned_variables_collector_2.class_self_id == 't$?QR9 \r~WEuFJ+{+\n`'
+        assert assigned_variables_collector_2.variables == []
+        assert assigned_variables_collector_2.self_attributes == []
+        var_4 = assigned_variables_collector_2.visit_Name(name_0)
+        assert var_4 is None
+        list_1 = [assign_0, assign_0]
+        arg_0 = module_1.arg(*list_1)
+        str_2 = "-?zI+4oz6f'r>q!\x0b214G"
+        signature_variables_collector_0 = module_0.SignatureVariablesCollector(
+            str_2)
+        assert signature_variables_collector_0.constructor_source == "-?zI+4oz6f'r>q!\x0b214G"
+        assert signature_variables_collector_0.class_self_id is None
+        assert signature_variables_collector_0.variables == []
+        var_5 = signature_variables_collector_0.visit_arg(arg_0)
+        assert var_5 is None
+        expr_3 = module_1.expr()
+        assert expr_3 is not None
+        str_3 = None
+        assigned_variables_collector_3 = module_0.AssignedVariablesCollector(
+            str_3, expr_1)
+        assert assigned_variables_collector_3.class_self_id is None
+        assert assigned_variables_collector_3.variables == []
+        assert assigned_variables_collector_3.self_attributes == []
+        list_2 = [name_0]
+        attribute_0 = module_1.Attribute(*list_2)
+        var_6 = assigned_variables_collector_2.visit_Attribute(attribute_0)
+    except BaseException:
+        pass
